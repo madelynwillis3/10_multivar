@@ -101,7 +101,7 @@ library(ggpmisc)
 ```
 
 ```{r}
-weather <- read_csv("../../09_opendata/data/weather_monthsum.csv")
+weather <- read_csv("../data/weather_monthsum.csv")
 
 weather
 ```
@@ -142,6 +142,7 @@ ggsave("../output/corrmat.png",
 A bit difficult to see because we have so many predictors, let's extract in table format.  
 
 ```{r highest correlations}
+#sorts by highest correlations
 weather %>%
   dplyr::select(-year, -site) %>%
   cor() %>% # calculates r (-1 to 1)
@@ -155,6 +156,7 @@ weather %>%
 ```
 
 ```{r lowest correlations}
+#sorts by lowest correlations
 weather %>%
   dplyr::select(-year, -site) %>%
   cor() %>% # calculates r (-1 to 1)
@@ -170,6 +172,7 @@ weather %>%
 How do variables relate to fiber strength in a bivariate relationship?  
 
 ```{r r2}
+#now do correlation with fiber strength
 weather %>%
   dplyr::select(-site, -year) %>%
   pivot_longer(cols=-strength_gtex) %>%
@@ -178,8 +181,8 @@ weather %>%
   mutate(r2 = map_dbl(data,
                   ~lm(strength_gtex ~ value,
                       data = .x) %>%
-                    glance(.) %>%
-                    pull(r.squared)
+                    glance(.) %>% #model fit metrics
+                    pull(r.squared) #get r squared
                   )) %>%
   arrange(desc(r2))
 
