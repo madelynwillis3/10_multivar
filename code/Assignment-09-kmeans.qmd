@@ -1,6 +1,6 @@
 ---
 title: "Assignment 9 - K-means"
-author: "YOUR NAME HERE"  
+author: "Madelyn Willis"  
 format:
   html:
     code-fold: true 
